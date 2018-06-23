@@ -9,7 +9,7 @@ import (
 type Ctl struct {
 	Pth string
 
-	Passwd   *Passwds
+	Passwds  *Passwds
 	Groups   *Groups
 	Shadows  *Shadows
 	GShadows *GShadows
@@ -49,17 +49,17 @@ func (self *Ctl) ReadPasswds() error {
 		return err
 	}
 
-	self.Passwd = o
+	self.Passwds = o
 
 	return nil
 }
 
 func (self *Ctl) WritePasswds() error {
-	if self.Passwd == nil {
+	if self.Passwds == nil {
 		return errors.New("Passwd not loaded")
 	}
 
-	txt, err := self.Passwd.Render()
+	txt, err := self.Passwds.Render()
 	if err != nil {
 		return err
 	}
@@ -90,7 +90,7 @@ func (self *Ctl) ReadGroups() error {
 }
 
 func (self *Ctl) WriteGroups() error {
-	if self.Passwd == nil {
+	if self.Groups == nil {
 		return errors.New("Groups not loaded")
 	}
 
@@ -125,7 +125,7 @@ func (self *Ctl) ReadShadows() error {
 }
 
 func (self *Ctl) WriteShadows() error {
-	if self.Passwd == nil {
+	if self.Shadows == nil {
 		return errors.New("Shadows not loaded")
 	}
 
@@ -160,7 +160,7 @@ func (self *Ctl) ReadGShadows() error {
 }
 
 func (self *Ctl) WriteGShadows() error {
-	if self.Passwd == nil {
+	if self.GShadows == nil {
 		return errors.New("GShadows not loaded")
 	}
 
@@ -223,4 +223,20 @@ func (self *Ctl) WriteAll() error {
 	}
 
 	return nil
+}
+
+func (self *Ctl) NewPasswds() {
+	self.Passwds = &Passwds{}
+}
+
+func (self *Ctl) NewGroups() {
+	self.Groups = &Groups{}
+}
+
+func (self *Ctl) NewShadows() {
+	self.Shadows = &Shadows{}
+}
+
+func (self *Ctl) NewGShadow() {
+	self.GShadows = &GShadows{}
 }
