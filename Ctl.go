@@ -18,6 +18,7 @@ type Ctl struct {
 func NewCtl(pth string) *Ctl {
 	self := new(Ctl)
 	self.Pth = pth
+	self.NewAll()
 	return self
 }
 
@@ -237,6 +238,13 @@ func (self *Ctl) NewShadows() {
 	self.Shadows = &Shadows{}
 }
 
-func (self *Ctl) NewGShadow() {
+func (self *Ctl) NewGShadows() {
 	self.GShadows = &GShadows{}
+}
+
+func (self *Ctl) NewAll() {
+	self.NewPasswds()
+	self.NewGroups()
+	self.NewShadows()
+	self.NewGShadows()
 }
