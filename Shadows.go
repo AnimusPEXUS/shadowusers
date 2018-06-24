@@ -35,9 +35,34 @@ func (self *Shadows) GetByLogin(login string) (*Shadow, error) {
 	return nil, errors.New("not found")
 }
 
+func (self *Shadows) SortByLogin() {
+	lg := len(self.Shadows)
+	for i := 0; i != lg-1; i++ {
+		for j := i + 1; j != lg; j++ {
+			if self.Shadows[i].Login > self.Shadows[j].Login {
+				z := self.Shadows[i]
+				self.Shadows[i] = self.Shadows[j]
+				self.Shadows[j] = z
+			}
+		}
+	}
+}
+
+func (self *Shadows) ShalowCopy() *Shadows {
+	ret := &Shadows{}
+	for _, i := range self.Shadows {
+		ret.Shadows = append(ret.Shadows, i)
+	}
+	return ret
+}
+
 func (self *Shadows) Render() (string, error) {
+
+	c := self.ShalowCopy()
+	c.SortByLogin()
+
 	ret := ""
-	for k, v := range self.Shadows {
+	for k, v := range c.Shadows {
 		t, err := v.Render()
 		if err != nil {
 			return "", errors.New(

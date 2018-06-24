@@ -54,9 +54,34 @@ func (self *Passwds) GetByGid(gid int) ([]*Passwd, error) {
 	return ret, nil
 }
 
+func (self *Passwds) SortByUid() {
+	lg := len(self.Passwds)
+	for i := 0; i != lg-1; i++ {
+		for j := i + 1; j != lg; j++ {
+			if self.Passwds[i].UserId > self.Passwds[j].UserId {
+				z := self.Passwds[i]
+				self.Passwds[i] = self.Passwds[j]
+				self.Passwds[j] = z
+			}
+		}
+	}
+}
+
+func (self *Passwds) ShalowCopy() *Passwds {
+	ret := &Passwds{}
+	for _, i := range self.Passwds {
+		ret.Passwds = append(ret.Passwds, i)
+	}
+	return ret
+}
+
 func (self *Passwds) Render() (string, error) {
+
+	c := self.ShalowCopy()
+	c.SortByUid()
+
 	ret := ""
-	for k, v := range self.Passwds {
+	for k, v := range c.Passwds {
 		t, err := v.Render()
 		if err != nil {
 			return "", errors.New(

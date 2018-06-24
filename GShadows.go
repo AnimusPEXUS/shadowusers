@@ -63,9 +63,34 @@ func (self *GShadows) GetByMember(user string) ([]*GShadow, error) {
 	return ret, nil
 }
 
+func (self *GShadows) ShalowCopy() *GShadows {
+	ret := &GShadows{}
+	for _, i := range self.GShadows {
+		ret.GShadows = append(ret.GShadows, i)
+	}
+	return ret
+}
+
+func (self *GShadows) SortByName() {
+	lg := len(self.GShadows)
+	for i := 0; i != lg-1; i++ {
+		for j := i + 1; j != lg; j++ {
+			if self.GShadows[i].Name > self.GShadows[j].Name {
+				z := self.GShadows[i]
+				self.GShadows[i] = self.GShadows[j]
+				self.GShadows[j] = z
+			}
+		}
+	}
+}
+
 func (self *GShadows) Render() (string, error) {
+
+	c := self.ShalowCopy()
+	c.SortByName()
+
 	ret := ""
-	for k, v := range self.GShadows {
+	for k, v := range c.GShadows {
 		t, err := v.Render()
 		if err != nil {
 			return "", errors.New(

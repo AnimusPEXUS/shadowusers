@@ -59,9 +59,34 @@ func (self *Groups) GetByUser(user string) ([]*Group, error) {
 	return ret, nil
 }
 
+func (self *Groups) SortByGID() {
+	lg := len(self.Groups)
+	for i := 0; i != lg-1; i++ {
+		for j := i + 1; j != lg; j++ {
+			if self.Groups[i].GID > self.Groups[j].GID {
+				z := self.Groups[i]
+				self.Groups[i] = self.Groups[j]
+				self.Groups[j] = z
+			}
+		}
+	}
+}
+
+func (self *Groups) ShalowCopy() *Groups {
+	ret := &Groups{}
+	for _, i := range self.Groups {
+		ret.Groups = append(ret.Groups, i)
+	}
+	return ret
+}
+
 func (self *Groups) Render() (string, error) {
+
+	c := self.ShalowCopy()
+	c.SortByGID()
+
 	ret := ""
-	for k, v := range self.Groups {
+	for k, v := range c.Groups {
 		t, err := v.Render()
 		if err != nil {
 			return "", errors.New(
