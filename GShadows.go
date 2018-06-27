@@ -73,6 +73,9 @@ func (self *GShadows) ShalowCopy() *GShadows {
 
 func (self *GShadows) SortByName() {
 	lg := len(self.GShadows)
+	if lg < 2 {
+		return
+	}
 	for i := 0; i != lg-1; i++ {
 		for j := i + 1; j != lg; j++ {
 			if self.GShadows[i].Name > self.GShadows[j].Name {

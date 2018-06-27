@@ -56,6 +56,9 @@ func (self *Passwds) GetByGid(gid int) ([]*Passwd, error) {
 
 func (self *Passwds) SortByUid() {
 	lg := len(self.Passwds)
+	if lg < 2 {
+		return
+	}
 	for i := 0; i != lg-1; i++ {
 		for j := i + 1; j != lg; j++ {
 			if self.Passwds[i].UserId > self.Passwds[j].UserId {

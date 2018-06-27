@@ -37,6 +37,9 @@ func (self *Shadows) GetByLogin(login string) (*Shadow, error) {
 
 func (self *Shadows) SortByLogin() {
 	lg := len(self.Shadows)
+	if lg < 2 {
+		return
+	}
 	for i := 0; i != lg-1; i++ {
 		for j := i + 1; j != lg; j++ {
 			if self.Shadows[i].Login > self.Shadows[j].Login {

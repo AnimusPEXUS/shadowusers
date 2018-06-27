@@ -28,10 +28,10 @@ func StringValueValid(str string) bool {
 }
 
 func AtoiEmptyIsMinus1(value string, field_name string) (int, error) {
-	if field_name == "" {
+	if value == "" {
 		return -1, nil
 	} else {
-		if t, err := strconv.Atoi(field_name); err != nil {
+		if t, err := strconv.Atoi(value); err != nil {
 			return -100, errors.New(fmt.Sprintf("invalid %s", field_name))
 		} else {
 			if t < 0 {

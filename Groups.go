@@ -61,6 +61,9 @@ func (self *Groups) GetByUser(user string) ([]*Group, error) {
 
 func (self *Groups) SortByGID() {
 	lg := len(self.Groups)
+	if lg < 2 {
+		return
+	}
 	for i := 0; i != lg-1; i++ {
 		for j := i + 1; j != lg; j++ {
 			if self.Groups[i].GID > self.Groups[j].GID {
