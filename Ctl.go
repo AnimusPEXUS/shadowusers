@@ -65,7 +65,7 @@ func (self *Ctl) WritePasswds() error {
 		return err
 	}
 
-	err = ioutil.WriteFile(self.PasswdsPath(), []byte(txt), 755)
+	err = ioutil.WriteFile(self.PasswdsPath(), []byte(txt), 0755)
 	if err != nil {
 		return err
 	}
@@ -100,7 +100,7 @@ func (self *Ctl) WriteGroups() error {
 		return err
 	}
 
-	err = ioutil.WriteFile(self.GroupsPath(), []byte(txt), 755)
+	err = ioutil.WriteFile(self.GroupsPath(), []byte(txt), 0755)
 	if err != nil {
 		return err
 	}
@@ -135,7 +135,7 @@ func (self *Ctl) WriteShadows() error {
 		return err
 	}
 
-	err = ioutil.WriteFile(self.ShadowsPath(), []byte(txt), 700)
+	err = ioutil.WriteFile(self.ShadowsPath(), []byte(txt), 0700)
 	if err != nil {
 		return err
 	}
@@ -170,7 +170,7 @@ func (self *Ctl) WriteGShadows() error {
 		return err
 	}
 
-	err = ioutil.WriteFile(self.GShadowsPath(), []byte(txt), 700)
+	err = ioutil.WriteFile(self.GShadowsPath(), []byte(txt), 0700)
 	if err != nil {
 		return err
 	}
